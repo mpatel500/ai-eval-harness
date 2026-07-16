@@ -1,0 +1,18 @@
+[project]
+name = "ai-eval-harness"
+version = "0.1.0"
+description = "Evaluation harness for measuring and comparing LLM outputs on a support-ticket-triage task"
+authors = [
+    {name = "Mukesh Patel",email = "mpatel125@outlook.com"}
+]
+license = "MIT License"
+requires-python = ">=3.14"
+dependencies = [
+    "pydantic (>=2.13.4,<3.0.0)",
+    "anthropic (>=0.117.0,<0.118.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
