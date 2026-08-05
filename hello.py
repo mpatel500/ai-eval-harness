@@ -1,19 +1,22 @@
-import os
 from anthropic import Anthropic
-from dotenv import load_dotenv
+from anthropic.types.text_block import TextBlock
+from config import settings
 
-load_dotenv()
 
-client = Anthropic(api_key=os.environ.get("API_KEY"))
+client = Anthropic(api_key=settings.anthropic_api_key)
 
-messages = client.messages.create(
-    model="claude-haiku-4-5",
-    max_tokens=1024,
+message = client.messages.create(
+    model=settings.model,
+    max_tokens=settings.max_tokens,
     messages=[{
         "role": "user",
         "content": "Hello, Claude"
     }]
 )
 
-for message in messages:
-    print(message)
+print(f"Input tokens: {message.usage.input_tokens} Output tokens: {message.usage.output_tokens}")
+input_price = settings.input_price_per_mtok * message.usage.input_tokens
+output_price = settings.output_price_per_mtok * message.usage.output_tokens
+print(f"Input price: {input_price} Output price: {output_price}")
+
+print('. '.join([content.text for content in message.content if isinstance(content, TextBlock)]))
